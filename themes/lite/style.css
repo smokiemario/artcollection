@@ -18,11 +18,11 @@ BODY {
 3                            menu bar                            *
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 .menu {
-	border-bottom: 1px solid #C3D2E0;
+	border-bottom: 1px solid #e0c3c7;
 	margin-top: 0;
 	margin-bottom: 0;
 	padding: 4px;
-	background: #E3EFFA;
+	background: #e4c3c7;
 }
 a.tab, a.tab:visited {
 	color:#000000;
@@ -39,7 +39,7 @@ a.tab:hover, a.tab:active, .tab-selected {
 .tab, .tab-selected, .tframe, #tips {
 	-moz-border-radius:4px;
 	-webkit-border-radius:4px;
-	border:1px solid #C8D1DB;
+	border:1px solid #e0c3c7;
 	cursor:default;
 	margin-right:2px;
 	padding:2px;
@@ -53,26 +53,26 @@ a.tab:hover, a.tab:active, .tab-selected {
 3                        secondary bars                          *
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 .sbar {
-	border-bottom: 1px solid #C3D2E0;
+	border-bottom: 1px solid #e0c3c7;
 	margin-top: 0;
 	margin-bottom: 16px;
 	padding: 4px;
-	background: #CEDFF0;
+	background: #e0c3c7;
 	text-align: left;
 }
 .sfoot {
-	border-top: 1px solid #C3D2E0;
+	border-top: 1px solid #e0c3c7;
 	margin-top: 0;
 	margin-bottom: 0;
 	padding: 4px;
-	background: #CEDFF0;
+	background: #e0c3c7;
 	text-align: center;
 }
 .navside, #comment-list-recent .blockbody {
-	background:none repeat scroll 0 0 #CEDFF0;
+	background:none repeat scroll 0 0 #f0ced6;
 	padding:4px;
 	font-size:85%;
-	border:1px solid #C3D2E0;
+	border:1px solid #e0c3c7;
 	margin-bottom:5px;
 	-moz-border-radius:4px;
 	-webkit-border-radius:4px;
@@ -111,7 +111,7 @@ H1 A {
 	color: black;
 }
 A, A:hover, A:active, A:visited {
-	color: #2860AD;
+	color: #ad283a;
 }
 H3 {
 	text-align: center;
@@ -129,19 +129,19 @@ CODE {
 	font-size: 0.8rem;
 }
 
-TABLE.zebra {border-spacing: 0; border: 2px solid #C3D2E0;}
+TABLE.zebra {border-spacing: 0; border: 2px solid #e0c3c7;}
 TABLE.zebra TD, TABLE.zebra TH {vertical-align: middle; padding: 4px;}
-TABLE.zebra THEAD TD, TABLE.zebra THEAD TH {border-bottom: 2px solid #C3D2E0;}
-TABLE.zebra TFOOT TD, TABLE.zebra TFOOT TH {border-top: 2px solid #C3D2E0;}
-TABLE.zebra TR TD {border-bottom: 1px solid #C3D2E0;}
-TABLE.zebra TR:nth-child(odd) {background: #CEDFF0;}
-TABLE.zebra TR:nth-child(even) {background: #F0F7FF;}
+TABLE.zebra THEAD TD, TABLE.zebra THEAD TH {border-bottom: 2px solid #e0c3c4;}
+TABLE.zebra TFOOT TD, TABLE.zebra TFOOT TH {border-top: 2px solid #e0c3c4;}
+TABLE.zebra TR TD {border-bottom: 1px solid #e0c3c5;}
+TABLE.zebra TR:nth-child(odd) {background: #f0ced1;}
+TABLE.zebra TR:nth-child(even) {background: #fff0f2;}
 TABLE.image_info {margin: auto;}
 
 INPUT, TEXTAREA, button {
 	-moz-border-radius:4px;
 	-webkit-border-radius:4px;
-	border:1px solid #C8D1DB;
+	border:1px solid #e0c3c7;
 	cursor:default;
 	margin-right:2px;
 	padding:2px;
@@ -172,9 +172,9 @@ A {text-decoration: none;}
 A:hover {text-decoration: underline;}
 
 BLOCKQUOTE {
-	border: 1px solid #C3D2E0;
+	border: 1px solid #e0c3c7;
 	padding: 8px;
-	background: #E3EFFA;
+	background: #fae3e8;
 }
 
 UL {
@@ -249,14 +249,14 @@ TABLE.tag_list>TBODY>TR>TD:after {
 
 .paginator {
 	padding: 4px;
-	border-right: 1px solid #C3D2E0;
-	border-left: 1px solid #C3D2E0;
+	border-right: 1px solid #e0c3c7;
+	border-left: 1px solid #e0c3c7;
 }
 .paginator A {
 	-moz-border-radius:4px;
 	-webkit-border-radius:4px;
 	color: #000;
-	border:1px solid #C8D1DB;
+	border:1px solid #e0c3c7;
 	cursor:default;
 	margin-right:2px;
 	padding:2px;
