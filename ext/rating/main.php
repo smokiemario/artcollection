@@ -41,6 +41,7 @@ add_rating(new ImageRating("q", "Questionable", "questionable", 500));
 add_rating(new ImageRating("e", "Explicit", "explicit", 1000));
 add_rating(new ImageRating("x", "Extreme", "extreme", 1500));
 add_rating(new ImageRating("t", "To-Tag", "to-tag", 999999));
+
 /** @noinspection PhpIncludeInspection */
 @include_once "data/config/ratings.conf.php";
 
