@@ -508,7 +508,7 @@ class UserPage extends Extension
         if (strlen($name) < 1) {
             throw new UserCreationException("Username must be at least 1 character");
         }
-        if (!preg_match('/^[a-zA-Z0-9-_]+$/', $name)) {
+        if (!\Safe\preg_match('/^[a-zA-Z0-9-_]+$/', $name)) {
             throw new UserCreationException(
                 "Username contains invalid characters. Allowed characters are " .
                 "letters, numbers, dash, and underscore"
@@ -566,8 +566,8 @@ class UserPage extends Extension
     {
         foreach ($context as $term) {
             if (
-                preg_match(self::USER_SEARCH_REGEX, $term) ||
-                preg_match(self::USER_ID_SEARCH_REGEX, $term)
+                \Safe\preg_match(self::USER_SEARCH_REGEX, $term) ||
+                \Safe\preg_match(self::USER_ID_SEARCH_REGEX, $term)
             ) {
                 return true;
             }
@@ -579,18 +579,13 @@ class UserPage extends Extension
     {
         global $user;
 
-        if (is_null($event->term)) {
-            return;
-        }
-
-        $matches = [];
-        if (preg_match(self::USER_SEARCH_REGEX, $event->term, $matches)) {
+        if ($matches = $event->matches(self::USER_SEARCH_REGEX)) {
             $duser = User::by_name($matches[2]);
             $event->add_querylet(new Querylet("images.owner_id {$matches[1]}= {$duser->id}"));
-        } elseif (preg_match(self::USER_ID_SEARCH_REGEX, $event->term, $matches)) {
+        } elseif ($matches = $event->matches(self::USER_ID_SEARCH_REGEX)) {
             $user_id = int_escape($matches[2]);
             $event->add_querylet(new Querylet("images.owner_id {$matches[1]}= $user_id"));
-        } elseif ($user->can(Permissions::VIEW_IP) && preg_match("/^(?:poster|user)_ip[=|:]([0-9\.]+)$/i", $event->term, $matches)) {
+        } elseif ($user->can(Permissions::VIEW_IP) && $matches = $event->matches("/^(?:poster|user)_ip[=|:]([0-9\.]+)$/i")) {
             $user_ip = $matches[1]; // FIXME: ip_escape?
             $event->add_querylet(new Querylet("images.owner_ip = '$user_ip'"));
         }

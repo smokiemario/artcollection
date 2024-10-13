@@ -97,7 +97,7 @@ class Ratings extends Extension
             $search_terms[] = $rating->search_term;
         }
         $this->search_regexp = "/^rating[=|:](?:(\*|[" . $codes . "]+)|(" .
-            implode("|", $search_terms) . "|".implode("|", self::UNRATED_KEYWORDS)."))$/D";
+            implode("|", $search_terms) . "|".implode("|", self::UNRATED_KEYWORDS)."))$/iD";
 
         foreach (array_keys(UserClass::$known_classes) as $key) {
             if ($key == "base" || $key == "hellbanned") {
@@ -272,14 +272,10 @@ class Ratings extends Extension
             $event->add_querylet(new Querylet("rating IN ($set)"));
         }
 
-        if (is_null($event->term)) {
-            return;
-        }
+        if ($matches = $event->matches($this->search_regexp)) {
+            $ratings = strtolower($matches[1] ? $matches[1] : $matches[2][0]);
 
-        if (preg_match($this->search_regexp, strtolower($event->term), $matches)) {
-            $ratings = $matches[1] ? $matches[1] : $matches[2][0];
-
-            if (count($matches) > 2 && in_array($matches[2], self::UNRATED_KEYWORDS)) {
+            if (count($matches) > 2 && in_array(strtolower($matches[2]), self::UNRATED_KEYWORDS)) {
                 $ratings = "?";
             }
 
@@ -296,7 +292,7 @@ class Ratings extends Extension
 
     public function onTagTermCheck(TagTermCheckEvent $event): void
     {
-        if (preg_match($this->search_regexp, $event->term)) {
+        if ($event->matches($this->search_regexp)) {
             $event->metatag = true;
         }
     }
@@ -304,12 +300,11 @@ class Ratings extends Extension
     public function onTagTermParse(TagTermParseEvent $event): void
     {
         global $user;
-        $matches = [];
 
-        if (preg_match($this->search_regexp, strtolower($event->term), $matches)) {
-            $ratings = $matches[1] ? $matches[1] : $matches[2][0];
+        if ($matches = $event->matches($this->search_regexp)) {
+            $ratings = strtolower($matches[1] ? $matches[1] : $matches[2][0]);
 
-            if (count($matches) > 2 && in_array($matches[2], self::UNRATED_KEYWORDS)) {
+            if (count($matches) > 2 && in_array(strtolower($matches[2]), self::UNRATED_KEYWORDS)) {
                 $ratings = "?";
             }
 
@@ -520,7 +515,7 @@ class Ratings extends Extension
     private function no_rating_query(array $context): bool
     {
         foreach ($context as $term) {
-            if (preg_match("/^rating[=|:]/", $term)) {
+            if (\Safe\preg_match("/^rating[=|:]/", $term)) {
                 return false;
             }
         }

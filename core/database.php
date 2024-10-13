@@ -82,7 +82,7 @@ class Database
 
     private function connect_engine(): void
     {
-        if (preg_match("/^([^:]*)/", $this->dsn, $matches)) {
+        if (\Safe\preg_match("/^([^:]*)/", $this->dsn, $matches)) {
             $db_proto = $matches[1];
         } else {
             throw new ServerError("Can't figure out database engine");
@@ -126,7 +126,7 @@ class Database
     public function rollback(): bool
     {
         if ($this->is_transaction_open()) {
-            return $this->get_db()->rollback();
+            return $this->get_db()->rollBack();
         } else {
             throw new ServerError("Unable to call rollback() as there is no transaction currently open.");
         }
@@ -295,6 +295,7 @@ class Database
      * Execute an SQL query and return the first column of each row as a single iterable object.
      *
      * @param QueryArgs $args
+     * @return \Generator<mixed>
      */
     public function get_col_iterable(string $query, array $args = []): \Generator
     {
@@ -325,6 +326,7 @@ class Database
      * Execute an SQL query and return the the first column => the second column as an iterable object.
      *
      * @param QueryArgs $args
+     * @return \Generator<string, mixed>
      */
     public function get_pairs_iterable(string $query, array $args = []): \Generator
     {

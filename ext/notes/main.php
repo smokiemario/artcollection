@@ -201,22 +201,17 @@ class Notes extends Extension
      */
     public function onSearchTermParse(SearchTermParseEvent $event): void
     {
-        if (is_null($event->term)) {
-            return;
-        }
-
-        $matches = [];
-        if (preg_match("/^note[=|:](.*)$/i", $event->term, $matches)) {
+        if ($matches = $event->matches("/^note[=|:](.*)$/i")) {
             $notes = int_escape($matches[1]);
             $event->add_querylet(new Querylet("images.id IN (SELECT image_id FROM notes WHERE note = $notes)"));
-        } elseif (preg_match("/^notes([:]?<|[:]?>|[:]?<=|[:]?>=|[:|=])(\d+)%/i", $event->term, $matches)) {
+        } elseif ($matches = $event->matches("/^notes([:]?<|[:]?>|[:]?<=|[:]?>=|[:|=])(\d+)%/i")) {
             $cmp = ltrim($matches[1], ":") ?: "=";
             $notes = $matches[2];
             $event->add_querylet(new Querylet("images.id IN (SELECT id FROM images WHERE notes $cmp $notes)"));
-        } elseif (preg_match("/^notes_by[=|:](.*)$/i", $event->term, $matches)) {
+        } elseif ($matches = $event->matches("/^notes_by[=|:](.*)$/i")) {
             $user_id = User::name_to_id($matches[1]);
             $event->add_querylet(new Querylet("images.id IN (SELECT image_id FROM notes WHERE user_id = $user_id)"));
-        } elseif (preg_match("/^(notes_by_userno|notes_by_user_id)[=|:](\d+)$/i", $event->term, $matches)) {
+        } elseif ($matches = $event->matches("/^(notes_by_userno|notes_by_user_id)[=|:](\d+)$/i")) {
             $user_id = int_escape($matches[2]);
             $event->add_querylet(new Querylet("images.id IN (SELECT image_id FROM notes WHERE user_id = $user_id)"));
         }
@@ -255,7 +250,7 @@ class Notes extends Extension
     {
         global $database, $user;
 
-        $note = json_decode(\Safe\file_get_contents('php://input'), true);
+        $note = \Safe\json_decode(\Safe\file_get_contents('php://input'), true);
 
         $database->execute(
             "
@@ -316,7 +311,7 @@ class Notes extends Extension
     {
         global $database;
 
-        $note = json_decode(\Safe\file_get_contents('php://input'), true);
+        $note = \Safe\json_decode(\Safe\file_get_contents('php://input'), true);
 
         // validate parameters
         if (empty($note['note'])) {
@@ -335,7 +330,7 @@ class Notes extends Extension
     {
         global $user, $database;
 
-        $note = json_decode(\Safe\file_get_contents('php://input'), true);
+        $note = \Safe\json_decode(\Safe\file_get_contents('php://input'), true);
         $database->execute("
 			UPDATE notes SET enable = :enable
 			WHERE image_id = :image_id AND id = :id
